@@ -1,0 +1,43 @@
+.containerDeatil{
+    width: 75%;
+    height: 75vh;
+    bottom: 50px;
+    background-color: lightblue;
+    border-radius: 5px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+.detail{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 100px;
+}
+.detail__image{
+    width: 50%;
+    height: 50%;
+}
+.contentDetail{
+    width: 30%;
+    height: 50vh;
+}
+.contentDetail p{
+    text-align: justify;
+    padding: 10px;
+    font-size: 0.8rem;
+}
+.endCompra{
+    background-color: lightyellow;
+    text-decoration: none;
+    color: black;
+    padding: 1rem;
+    border: none;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
