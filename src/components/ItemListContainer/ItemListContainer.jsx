@@ -1,10 +1,8 @@
 import './ItemListContainer.css';
 import React, { useState, useEffect } from 'react';
 import { ItemList } from '../ItemList/ItemList';
-import { listaPeliculas } from '../baseDatos/baseDatos';
 import { useParams } from 'react-router-dom';
-
-const films = listaPeliculas;
+import { getFirestore, collection, getDocs, query, where } from 'firebase/firestore';
 
 
 export const ItemListContainer = () => {
@@ -13,17 +11,15 @@ export const ItemListContainer = () => {
     const {categoriaId} = useParams();
 
     useEffect(() => {
-       const getData = new Promise(resolve => {
-        setTimeout(() => {
-           resolve(films);
-        }, 1000);
-       });
-
-       if(categoriaId){
-         getData.then(res => setData(res.filter(film => film.category === categoriaId)));
-       }else{
-         getData.then(res => setData(res));
-       }
+      const querydb = getFirestore();
+      const querycollection = collection(querydb, 'products');
+      
+      if(categoriaId){
+        const queryFilter = query(querycollection, where('category', '==', categoriaId));
+        getDocs(queryFilter).then(res => setData(res.docs.map(product => ({id: product.id, ...product.data()}))));
+      }else{
+        getDocs(querycollection).then(res => setData(res.docs.map(product => ({id: product.id, ...product.data()}))));   
+      }
 
     }, [categoriaId]);
 

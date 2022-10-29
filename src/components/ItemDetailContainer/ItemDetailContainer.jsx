@@ -2,9 +2,7 @@ import './ItemDetailContainer.css';
 import React, {useState, useEffect} from 'react';
 import { ItemDetail } from '../ItemDetail/ItemDetail';
 import { useParams } from 'react-router-dom';
-import { listaPeliculas } from '../baseDatos/baseDatos';
-
-const films = listaPeliculas;
+import { getFirestore, doc, getDoc } from 'firebase/firestore';
 
 export const ItemDetailContainer = () => {
     const [data, setData] = useState({});
@@ -12,12 +10,9 @@ export const ItemDetailContainer = () => {
     const {detalleId} = useParams();
 
     useEffect(() => {
-        const getData = new Promise(resolve => {
-            setTimeout(() => {
-                resolve(films);
-            }, 1000);
-        });
-        getData.then(res => setData(res.find(film => film.id === parseInt(detalleId))));
+       const querydb = getFirestore();
+       const querydoc = doc(querydb, 'products', detalleId);
+       getDoc(querydoc).then(res => setData({id: res.id, ...res.data()}));
     }, [detalleId]);
 
     return(
