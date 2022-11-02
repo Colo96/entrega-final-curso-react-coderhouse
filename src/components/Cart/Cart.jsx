@@ -34,25 +34,28 @@ export const Cart = () => {
 
     if (cart.length === 0) {
         return (
-            <>
+            <div className="container-cart">
                 <p>
                     No hay elementos en el carrito
                 </p>
                 <Link to='/'>
                     Hacer compras
                 </Link>
-            </>
+            </div>
         );
     }
 
     return (
-        <>
+        <div className="container-cart">
             {
                 cart.map(product => <ItemCart key={product.id} product={product} />)
             }
             <p>
                 Precio Total: ${totalPrice()}
             </p>
+            <h2>
+                Por favor complete el formulario para finalizar la compra
+            </h2>
             <form>
                 <label>
                     <span>Nombre:</span><br />
@@ -66,7 +69,7 @@ export const Cart = () => {
                 <br />
                 <label>
                     <span>Teléfono:</span><br />
-                    <input type="text" name="telefono" placeholder='Teléfono' onChange={handleInputChange} />
+                    <input type="number" name="telefono" placeholder='Teléfono' onChange={handleInputChange} />
                 </label>
                 <br />
                 <label>
@@ -78,6 +81,6 @@ export const Cart = () => {
             <button onClick={handleClick}>
                 Emitir compra
             </button>
-        </>
+        </div>
     );
 }
