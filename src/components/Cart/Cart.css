@@ -2,4 +2,24 @@
     background-image: url(../../assets/fondo-peliserie.jpg);
     width: 100%;
     height: 100vh;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.cart-empty{
+    background-color: lightblue;
+    width: 30%;
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.cart-full{
+    background-color: lightblue;
+    width: 40%;
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
