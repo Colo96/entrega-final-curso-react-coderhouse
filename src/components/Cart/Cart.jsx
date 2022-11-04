@@ -4,6 +4,7 @@ import { useCartContext } from '../../context/CartContext';
 import { Link } from 'react-router-dom';
 import { ItemCart } from '../ItemCart/ItemCart';
 import { addDoc, collection, getFirestore, serverTimestamp } from 'firebase/firestore';
+import swAlert from 'sweetalert';
 
 export const Cart = () => {
 
@@ -26,19 +27,46 @@ export const Cart = () => {
         });
     }
 
-    const validateCamp = (e) => {
-          if(e.target.name === 'nombre'){
-
-          }
-          if(e.target.value === ''){
-             console.log("El campo " + e.target.name + " no puede estar vacio. Ten en cuenta que no se terminara la compra si este campo sigue vacio.");
-          }
-    }
-
     const handleClick = () => {
+
+        const regexEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const regexPhone = /^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$/;
+
         const db = getFirestore();
         const ordersCollection = collection(db, 'orders');
-        addDoc(ordersCollection, order).then(({ id }) => console.log(id));
+
+        if (order.nombre === '' || order.apellido === '' || order.email === '' || order.telefono === '') {
+            swAlert({
+                icon: "error",
+                title: "Los campos no pueden estar vacios",
+            });
+            return;
+        }
+
+        if (order.email !== '' && !regexEmail.test(order.email)) {
+            swAlert({
+                icon: "warning",
+                title: "Debes escribir una direccion de correo electronico valida",
+            });
+            return;
+        }
+
+        if (order.telefono !== '' && !regexPhone.test(order.telefono)) {
+            swAlert({
+                icon: "warning",
+                title: "Debes escribir un teléfono valido",
+            });
+            return;
+        }
+
+        if ((order.telefono !== '' && regexPhone.test(order.telefono)) && (order.email !== '' && regexEmail.test(order.email))) {
+            addDoc(ordersCollection, order).then(({ id }) => console.log(id));
+            swAlert({
+                icon: "success",
+                title: "Realizaste la compra correctamente",
+            });
+            //cart.length = 0;
+        }
     }
 
     if (cart.length === 0) {
@@ -71,22 +99,22 @@ export const Cart = () => {
                 <form>
                     <label>
                         <span>Nombre:</span><br />
-                        <input type="text" name="nombre" placeholder='Nombre' onBlur={validateCamp} onChange={handleInputChange} />
+                        <input type="text" name="nombre" placeholder='Nombre' onChange={handleInputChange} />
                     </label>
                     <br />
                     <label>
                         <span>Apellido:</span><br />
-                        <input type="text" name="apellido" placeholder='Apellido' onBlur={validateCamp} onChange={handleInputChange} />
+                        <input type="text" name="apellido" placeholder='Apellido' onChange={handleInputChange} />
                     </label>
                     <br />
                     <label>
                         <span>Teléfono:</span><br />
-                        <input type="tel" name="telefono" placeholder='12-3454-6789' pattern="[0-9]{2}-[0-9]{4}-[0-9]{4}" onBlur={validateCamp} onChange={handleInputChange} />
+                        <input type="tel" name="telefono" placeholder='12-3454-6789' onChange={handleInputChange} />
                     </label>
                     <br />
                     <label>
                         <span>Email:</span><br />
-                        <input type="email" name="email" placeholder='algo@coldmail.com' onBlur={validateCamp} onChange={handleInputChange} />
+                        <input type="email" name="email" placeholder='algo@coldmail.com' onChange={handleInputChange} />
                     </label>
                 </form>
                 <br />
