@@ -73,4 +73,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 This is an ecommerce site for movies and series. 
 I chose as a focus the examples shown during the course. 
-Only dependencies seen in class were included and all the decisions you make are also seen in class.
+Only dependencies seen in class were included and all the decisions i make are also seen in class.

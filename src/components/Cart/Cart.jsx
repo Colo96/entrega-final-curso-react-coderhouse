@@ -65,7 +65,6 @@ export const Cart = () => {
                 icon: "success",
                 title: "Realizaste la compra correctamente",
             });
-            //cart.length = 0;
         }
     }
 
